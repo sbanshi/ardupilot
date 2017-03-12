@@ -40,6 +40,7 @@
 #include <AP_Compass/AP_Compass.h>     // ArduPilot Mega Magnetometer Library
 #include <AP_Math/AP_Math.h>        // ArduPilot Mega Vector/Matrix math Library
 #include <AP_ADC/AP_ADC.h>         // ArduPilot Mega Analog to Digital Converter Library
+#include <AP_MicroStrain/AP_MicroStrain.h>
 #include <AP_InertialSensor/AP_InertialSensor.h> // Inertial Sensor Library
 #include <AP_AccelCal/AP_AccelCal.h>                // interface and maths for accelerometer calibration
 #include <AP_AHRS/AP_AHRS.h>         // ArduPilot Mega DCM Library
@@ -214,6 +215,8 @@ private:
 
     AP_InertialSensor ins;
 
+    AP_MicroStrain ms {serial_manager};
+
 #if RANGEFINDER_ENABLED == ENABLED
     // rangefinder
     RangeFinder rangefinder {serial_manager};
@@ -238,9 +241,9 @@ private:
 #if AP_AHRS_NAVEKF_AVAILABLE
     NavEKF EKF{&ahrs, barometer, rangefinder};
     NavEKF2 EKF2{&ahrs, barometer, rangefinder};
-    AP_AHRS_NavEKF ahrs {ins, barometer, gps, rangefinder, EKF, EKF2};
+    AP_AHRS_NavEKF ahrs {ins, barometer, gps, rangefinder, ms, EKF, EKF2};
 #else
-    AP_AHRS_DCM ahrs {ins, barometer, gps};
+    AP_AHRS_DCM ahrs {ins, barometer, gps, ms};
 #endif
 
     AP_L1_Control L1_controller {ahrs};
