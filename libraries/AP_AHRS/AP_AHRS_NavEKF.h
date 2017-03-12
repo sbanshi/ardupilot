@@ -24,6 +24,7 @@
 
 #include <AP_HAL/AP_HAL.h>
 #include "AP_AHRS.h"
+#include <AP_MicroStrain/AP_MicroStrain.h>
 
 #if CONFIG_HAL_BOARD == HAL_BOARD_SITL
 #include <SITL/SITL.h>
@@ -59,7 +60,7 @@ public:
     };
 
     // Constructor
-    AP_AHRS_NavEKF(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps, RangeFinder &rng,
+    AP_AHRS_NavEKF(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps, RangeFinder &rng, AP_MicroStrain &ms,
                    NavEKF &_EKF1, NavEKF2 &_EKF2, Flags flags = FLAG_NONE);
 
     // return the smoothed gyro vector corrected for drift

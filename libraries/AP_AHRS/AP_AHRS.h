@@ -29,6 +29,7 @@
 #include <AP_InertialSensor/AP_InertialSensor.h>
 #include <AP_Baro/AP_Baro.h>
 #include <AP_Param/AP_Param.h>
+#include <AP_MicroStrain/AP_MicroStrain.h>
 
 class OpticalFlow;
 #define AP_AHRS_TRIM_LIMIT 10.0f        // maximum trim angle in degrees
@@ -47,7 +48,7 @@ class AP_AHRS
 {
 public:
     // Constructor
-    AP_AHRS(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps) :
+    AP_AHRS(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps, AP_MicroStrain ms) :
         roll(0.0f),
         pitch(0.0f),
         yaw(0.0f),
@@ -62,6 +63,7 @@ public:
         _ins(ins),
         _baro(baro),
         _gps(gps),
+        _ms(ms),
         _cos_roll(1.0f),
         _cos_pitch(1.0f),
         _cos_yaw(1.0f),
@@ -127,6 +129,10 @@ public:
 
     void set_optflow(const OpticalFlow *optflow) {
         _optflow = optflow;
+    }
+
+    bool use_ms() {
+        return _ms_use;
     }
 
     const OpticalFlow* get_optflow() const {
@@ -466,7 +472,7 @@ protected:
     AP_Int8 _gps_minsats;
     AP_Int8 _gps_delay;
     AP_Int8 _ekf_type;
-
+    AP_Int8 _ms_use;
     // flags structure
     struct ahrs_flags {
         uint8_t have_initial_yaw        : 1;    // whether the yaw value has been intialised with a reference
@@ -499,6 +505,7 @@ protected:
     AP_InertialSensor   &_ins;
     AP_Baro             &_baro;
     const AP_GPS        &_gps;
+    AP_MicroStrain      &_ms;
 
     // a vector to capture the difference between the controller and body frames
     AP_Vector3f         _trim;

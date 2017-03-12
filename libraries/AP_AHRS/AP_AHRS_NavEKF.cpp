@@ -30,9 +30,9 @@
 extern const AP_HAL::HAL& hal;
 
 // constructor
-AP_AHRS_NavEKF::AP_AHRS_NavEKF(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps, RangeFinder &rng,
+AP_AHRS_NavEKF::AP_AHRS_NavEKF(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps, RangeFinder &rng, AP_MicroStrain &ms,
                                NavEKF &_EKF1, NavEKF2 &_EKF2, Flags flags) :
-    AP_AHRS_DCM(ins, baro, gps),
+    AP_AHRS_DCM(ins, baro, gps, ms),
     EKF1(_EKF1),
     EKF2(_EKF2),
     _ekf_flags(flags)
