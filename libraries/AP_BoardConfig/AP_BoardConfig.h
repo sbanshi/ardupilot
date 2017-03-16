@@ -47,6 +47,8 @@ public:
         PX4_BOARD_PIXRACER = 4,
         PX4_BOARD_PHMINI   = 5,
         PX4_BOARD_PH2SLIM  = 6,
+        PX4_BOARD_SPV10   = 13,
+        PX4_BOARD_SPV11   = 14,
 #endif
 #if CONFIG_HAL_BOARD == HAL_BOARD_VRBRAIN
         VRX_BOARD_BRAIN51  = 7,
