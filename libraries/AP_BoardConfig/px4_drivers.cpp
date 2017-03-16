@@ -400,7 +400,7 @@ void AP_BoardConfig::px4_start_sparrow_v10_sensors(void)
 
 void AP_BoardConfig::px4_start_sparrow_v11_sensors(void)
 {
-#if defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
+#if defined(CONFIG_ARCH_BOARD_SP_V3)
     bool have_FMUV3 = false;
 
     printf("Starting FMUv2 sensors\n");
@@ -480,7 +480,7 @@ void AP_BoardConfig::px4_start_sparrow_v11_sensors(void)
     }
 
     printf("FMUv6 sensors started\n");
-#endif // CONFIG_ARCH_BOARD_PX4SPARROW_V11
+#endif // CONFIG_ARCH_BOARD_SP_V3
 }
 
 
