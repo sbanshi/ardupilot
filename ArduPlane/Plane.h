@@ -215,8 +215,6 @@ private:
 
     AP_InertialSensor ins;
 
-    AP_MicroStrain ms {serial_manager};
-
 #if RANGEFINDER_ENABLED == ENABLED
     // rangefinder
     RangeFinder rangefinder {serial_manager};
@@ -237,6 +235,7 @@ private:
 
     AP_RPM rpm_sensor;
     
+    AP_MicroStrain ms {serial_manager};
 // Inertial Navigation EKF
 #if AP_AHRS_NAVEKF_AVAILABLE
     NavEKF EKF{&ahrs, barometer, rangefinder};

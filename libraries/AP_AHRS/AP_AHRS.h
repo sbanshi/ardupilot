@@ -48,7 +48,7 @@ class AP_AHRS
 {
 public:
     // Constructor
-    AP_AHRS(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps, AP_MicroStrain ms) :
+    AP_AHRS(AP_InertialSensor &ins, AP_Baro &baro, AP_GPS &gps, AP_MicroStrain &ms) :
         roll(0.0f),
         pitch(0.0f),
         yaw(0.0f),
@@ -131,7 +131,7 @@ public:
         _optflow = optflow;
     }
 
-    bool use_ms() {
+    uint8_t use_ms() {
         return _ms_use;
     }
 

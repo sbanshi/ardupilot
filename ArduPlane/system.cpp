@@ -200,6 +200,8 @@ void Plane::init_ardupilot()
     // GPS Initialization
     gps.init(&DataFlash, serial_manager);
 
+    ms.init();
+
     init_rc_in();               // sets up rc channels from radio
 
     relay.init();
