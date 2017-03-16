@@ -526,6 +526,13 @@ void Plane::handle_auto_mode(void)
     }
 
     nav_cmd_id = mission.get_current_nav_cmd().id;
+    if(nav_cmd_id == MAV_CMD_NAV_WAYPOINT) {
+        hal.console->printf("Doing Waypoint NAV CAMERA ON\n");
+        camera.switch_on();
+    } else {
+        camera.switch_off();
+        hal.console->printf("Not doing Waypoint NAV CAMERA OFF\n");
+    }
 
     if (quadplane.in_vtol_auto()) {
         quadplane.control_auto(next_WP_loc);
@@ -537,9 +544,6 @@ void Plane::handle_auto_mode(void)
     } else if (nav_cmd_id == MAV_CMD_NAV_LAND) {
         calc_nav_roll();
         calc_nav_pitch();
-#if defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
-        camera.switch_off();
-#endif
         if (auto_state.land_complete) {
             // during final approach constrain roll to the range
             // allowed for level flight
@@ -564,11 +568,7 @@ void Plane::handle_auto_mode(void)
         calc_nav_pitch();
         calc_throttle();
     }
-#if defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
-    if(nav_cmd_id == MAV_CMD_NAV_TAKEOFF){
-    	camera.switch_on();
-    }
-#endif
+
 }
 
 /*
@@ -591,6 +591,10 @@ void Plane::update_flight_mode(void)
         ahrs.set_fly_forward(false);
     } else {
         ahrs.set_fly_forward(true);
+    }
+
+    if(effective_mode != AUTO) {
+        camera.switch_off();
     }
 
     switch (effective_mode) 
