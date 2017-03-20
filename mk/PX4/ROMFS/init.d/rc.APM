@@ -71,19 +71,9 @@ else
     set BOARD FMUv5
 fi
 
-if [ $BOARD == FMUv1 ]
-then
-    set deviceC /dev/ttyS2
-    if [ -f /fs/microsd/APM/AUXPWM.en ]
-    then
-        set deviceD /dev/null
-    else
-        set deviceD /dev/ttyS1
-    fi
-else
-    set deviceC /dev/ttyS3
-    set deviceD /dev/ttyS4
-fi
+
+set deviceC /dev/ttyS3
+set deviceD /dev/ttyS1
 
 if uorb start
 then
@@ -204,15 +194,10 @@ else
     fi
 fi
 
-if [ $BOARD == FMUv1 -a $deviceD == /dev/ttyS1 ]
+
+if fmu mode_pwm4
 then
-    echo "Setting FMU mode_serial"
-    fmu mode_serial
-else
-    if fmu mode_pwm4
-    then
-        echo "Set FMU mode_pwm4"
-    fi
+    echo "Set FMU mode_pwm4"
 fi
 
 
