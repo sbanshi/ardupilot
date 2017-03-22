@@ -981,6 +981,7 @@ private:
     void read_receiver_rssi(void);
     void rpm_update(void);
     void button_update(void);
+    void update_rssi(void);
     void ice_update(void);
     void report_radio();
     void report_ins();
