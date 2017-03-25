@@ -73,7 +73,7 @@ fi
 
 
 set deviceC /dev/ttyS3
-set deviceD /dev/ttyS1
+set deviceD /dev/ttyS4
 
 if uorb start
 then
