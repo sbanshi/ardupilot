@@ -35,7 +35,7 @@ private:
     uint32_t _mtd_signature(void);
     void _mtd_write_signature(void);
 
-#if defined (CONFIG_ARCH_BOARD_PX4FMU_V4)
+#if defined (CONFIG_ARCH_BOARD_PX4FMU_V4) || defined (CONFIG_ARCH_BOARD_PX4SPARROW_V10)
     irqstate_t irq_state;
 #endif
     void bus_lock(bool lock);
