@@ -863,6 +863,7 @@ private:
     void Log_Write_Home_And_Origin();
     void Log_Write_Vehicle_Startup_Messages();
     void Log_Read(uint16_t log_num, int16_t start_page, int16_t end_page);
+    void Log_Write_Land(Location &loc, float proportion);
     void start_logging();
 
     void load_parameters(void);

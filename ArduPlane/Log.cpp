@@ -473,6 +473,39 @@ void Plane::Log_Write_Home_And_Origin()
     }
 }
 
+struct PACKED log_Land {
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float land_slope;
+    float glide_h;
+    float h;
+    float dem_h;
+    float prop;
+    float Lat;
+    float Lng;
+    float next_Lat;
+    float next_Lng;
+};
+
+void Plane::Log_Write_Land(Location &loc, float proportion)
+{
+        struct log_Land pkt = {
+            LOG_PACKET_HEADER_INIT(LOG_LAND_MSG),  
+            time_us   :  AP_HAL::micros64(),
+            land_slope :  auto_state.land_slope,
+            glide_h   :  loc.alt/100.0f,
+            h         :  prev_WP_loc.alt/100.0f,
+            dem_h     :  relative_target_altitude_cm()/100.0f,
+            prop      :  proportion,
+            Lat       :  prev_WP_loc.lat/100.0f,
+            Lng       :  prev_WP_loc.lng/100.0f,
+            next_Lat  :  next_WP_loc.lat/100.0f,
+            next_Lng  :  next_WP_loc.lng/100.0f
+        };
+
+        DataFlash.WriteBlock(&pkt, sizeof(pkt));
+}
+
 const struct LogStructure Plane::log_structure[] = {
     LOG_COMMON_STRUCTURES,
     { LOG_PERFORMANCE_MSG, sizeof(log_Performance), 
@@ -493,6 +526,8 @@ const struct LogStructure Plane::log_structure[] = {
       "STAT", "QBfBBBBBB",  "TimeUS,isFlying,isFlyProb,Armed,Safety,Crash,Still,Stage,Hit" },
     { LOG_QTUN_MSG, sizeof(QuadPlane::log_QControl_Tuning),
       "QTUN", "Qffffehhffff", "TimeUS,AngBst,ThrOut,DAlt,Alt,BarAlt,DCRt,CRt,DVx,DVy,DAx,DAy" },
+    {LOG_LAND_MSG, sizeof(log_Land),
+      "LAND",  "Qfffffffff",    "TimeUS,land_slope,glide_h,h,dh,prop,Lat,Lng,next_Lat,next_Lng"},
 #if OPTFLOW == ENABLED
     { LOG_OPTFLOW_MSG, sizeof(log_Optflow),
       "OF",   "QBffff",   "TimeUS,Qual,flowX,flowY,bodyX,bodyY" },

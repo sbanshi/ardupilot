@@ -304,6 +304,7 @@ void Plane::setup_landing_glide_slope(void)
 
         // stay within the range of the start and end locations in altitude
         constrain_target_altitude_location(loc, prev_WP_loc);
+        Log_Write_Land(loc, land_proportion);
 }
 
 /*
