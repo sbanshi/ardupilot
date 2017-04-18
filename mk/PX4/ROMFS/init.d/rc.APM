@@ -196,9 +196,9 @@ else
 fi
 
 
-if fmu mode_pwm4
+if fmu mode_pwm
 then
-    echo "Set FMU mode_pwm4"
+    echo "Set FMU mode_pwm 6"
 fi
 
 
