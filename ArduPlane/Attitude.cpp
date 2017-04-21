@@ -1037,11 +1037,11 @@ void Plane::set_servos(void)
         if (min_throttle < 0) {
             min_throttle = constrain_int16(min_throttle, min_throttle + throttle_watt_limit_min, 0);
         }
-
-        channel_throttle->set_servo_out(constrain_int16(channel_throttle->get_servo_out(), 
-                                                      min_throttle,
-                                                      max_throttle));
-
+        if (flight_stage != AP_SpdHgtControl::FLIGHT_LAND_FINAL) {
+            channel_throttle->set_servo_out(constrain_int16(channel_throttle->get_servo_out(), 
+                                                          min_throttle,
+                                                          max_throttle));
+        }
         if (!hal.util->get_soft_armed()) {
             channel_throttle->set_servo_out(0);
             channel_throttle->calc_pwm();                

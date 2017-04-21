@@ -554,12 +554,22 @@ void Plane::handle_auto_mode(void)
             // allowed for level flight
             nav_roll_cd = constrain_int32(nav_roll_cd, -g.level_roll_limit*100UL, g.level_roll_limit*100UL);
         }
-        calc_throttle();
         
         if (auto_state.land_complete) {
             // we are in the final stage of a landing - force
             // zero throttle
-            channel_throttle->set_servo_out(0);
+            if(gps.ground_speed() > 8 && rangefinder_state.in_range &&
+              (height_above_target() - rangefinder_correction()) > 0.3f) {
+                if(gps.ground_speed() > 18) {
+                    channel_throttle->set_servo_out(-100);
+                } else {
+                    channel_throttle->set_servo_out(-100*(gps.ground_speed()-8)/10);
+                }
+            } else {
+                channel_throttle->set_servo_out(0);
+            }
+        } else {
+            calc_throttle();
         }
     } else {
         // we are doing normal AUTO flight, the special cases
