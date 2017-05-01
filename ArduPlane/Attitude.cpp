@@ -466,7 +466,13 @@ void Plane::calc_nav_yaw_coordinated(float speed_scaler)
         commanded_rudder = yawController.get_servo_out(speed_scaler, disable_integrator);
 
         // add in rudder mixing from roll
-        commanded_rudder += channel_roll->get_servo_out() * g.kff_rudder_mix;
+        float rudder_mix;
+        if (flight_stage == AP_SpdHgtControl::FLIGHT_TAKEOFF && relative_altitude() < g.takeoff_rudder_mix_height && g.takeoff_rudder_mix_height > 0) {
+            rudder_mix = g.takeoff_rudder_mix;
+        } else {
+            rudder_mix = g.kff_rudder_mix;
+        }
+        commanded_rudder += channel_roll->get_servo_out() * rudder_mix;
         commanded_rudder += rudder_input;
     }
 

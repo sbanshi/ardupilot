@@ -215,6 +215,24 @@ const AP_Param::Info Plane::var_info[] = {
     // @User: Advanced
     GSCALAR(takeoff_pitch_limit_reduction_sec, "TKOFF_PLIM_SEC",  2),
 
+    // @Param: TKOFF_RDDR_FF
+    // @DisplayName: Takeoff aileron to Rudder feedforward
+    // @Description: This parameter sets aileron to rudder ff below the TKOFF_RDDR_FF_H hieght
+    // @Units: fraction
+    // @Range: 0 1
+    // @Increment: 0.1
+    // @User: User
+    GSCALAR(takeoff_rudder_mix, "TKOFF_RDDR_MIX",  0),
+
+    // @Param: TKOFF_RDDR_FF_H
+    // @DisplayName: Takeoff rudder feedforward min altitude
+    // @Description: Height below which the TKOFF_RDDR_FF will be active
+    // @Units: percent
+    // @Range: 0 10
+    // @Increment: 0.1
+    // @User: User
+    GSCALAR(takeoff_rudder_mix_height, "TKOFF_RDDR_MIX_H",  0),
+
     // @Param: LAND_THR_SLEW
     // @DisplayName: Landing throttle slew rate
     // @Description: This parameter sets the slew rate for the throttle during auto landing. When this is zero the THR_SLEWRATE parameter is used during landing. The value is a percentage throttle change per second, so a value of 20 means to advance the throttle over 5 seconds on landing. Values below 50 are not recommended as it may cause a stall when airspeed is low and you can not throttle up fast enough.
