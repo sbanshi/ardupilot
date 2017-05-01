@@ -254,6 +254,8 @@ void Plane::init_ardupilot()
     // ---------------------------
     reset_control_switch();
 
+    // Logger Initialisation
+    init_logger_stat_pin();
     // initialise sensor
 #if OPTFLOW == ENABLED
     if (optflow.enabled()) {
@@ -261,6 +263,19 @@ void Plane::init_ardupilot()
     }
 #endif
 
+}
+
+void Plane::init_logger_stat_pin(void)
+{
+    int8_t dpin = hal.gpio->analogPinToDigitalPin(60);  //TODO: make parameter
+    if (dpin == -1) {
+        return;
+    }
+    // ensure we are in input mode
+    hal.gpio->pinMode(dpin, HAL_GPIO_INPUT);
+
+    // enable pullup
+    hal.gpio->write(dpin, 1);
 }
 
 //********************************************************************************
